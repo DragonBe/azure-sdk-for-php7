@@ -4,6 +4,8 @@ With the release of [PHP 7](http://www.php.net) on December 3, 2015 it's importa
 
 Also with the rebranding of "Windows Azure" to "Microsoft Azure" in 2015, it's important that this rebranding is also present within the SDK.
 
+[![Build Status](https://status.continuousphp.com/git-hub/DragonBe/azure-sdk-for-php7?token=ddcc4e1e-ac10-45e9-be14-150a7a5ecfd2&branch=master)](https://continuousphp.com/git-hub/DragonBe/azure-sdk-for-php7)
+
 ## Goals
 
   1. Rebuild the SDK from scratch using native PHP 7 functionality
