@@ -1,0 +1,30 @@
+{
+  "name": "microsoft/azure-sdk-for-php2",
+  "description": "This project provides a set of PHP client libraries that make it easy to access Windows Azure tables, blobs, queues, service runtime and service management APIs.",
+  "keywords": [ "php", "azure", "sdk" ],
+  "version": "0.0.1",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Azure PHP SDK",
+      "email": "azurephpsdk@microsoft.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Microsoft\\": "src/Microsoft"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Microsoft\\Test\\": "tests/Microsoft"
+    }
+  },
+  "require": {
+    "php": ">=5.5",
+    "guzzlehttp/guzzle": "^6.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.1"
+  }
+}

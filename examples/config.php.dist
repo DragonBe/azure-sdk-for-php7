@@ -1,0 +1,8 @@
+<?php
+
+$config = [
+    'storage' => [
+        'name' => '', // The name you have given to your storage account
+        'key' => '', // The key of your storage account
+    ],
+];

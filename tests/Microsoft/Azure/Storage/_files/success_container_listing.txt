@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Content-Type: application/xml
+Server: Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0
+x-ms-request-id: e596bd66-0001-0043-38f3-aaa1e9000000
+x-ms-version: 2015-04-05
+Date: Tue, 10 May 2016 19:35:09 GMT
+
+<?xml version="1.0" encoding="utf-8"?><EnumerationResults ServiceEndpoint="http://foo.blob.core.windows.net/"><Containers><Container><Name>Foo</Name><Properties><Last-Modified>Tue, 04 Jun 2013 16:38:19 GMT</Last-Modified><Etag>"0x8D02F590E46F8B1"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState></Properties></Container><Container><Name>Bar</Name><Properties><Last-Modified>Sat, 08 Mar 2014 14:56:34 GMT</Last-Modified><Etag>"0x8D108F5BBF17E79"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState></Properties></Container><Container><Name>Baz</Name><Properties><Last-Modified>Wed, 30 Dec 2015 22:55:50 GMT</Last-Modified><Etag>"0x8D3116C5CC7A5D4"</Etag><LeaseStatus>unlocked</LeaseStatus><LeaseState>available</LeaseState></Properties></Container></Containers><NextMarker /></EnumerationResults>

@@ -1,0 +1,10 @@
+HTTP/1.1 403 Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.
+Content-Length: 435
+Content-Type: application/xml
+Server: Microsoft-HTTPAPI/2.0
+x-ms-request-id: e512a4f4-0001-002b-78f1-aaffb8000000
+Date: Tue, 10 May 2016 19:21:27 GMT
+
+<?xml version="1.0" encoding="utf-8"?><Error><Code>AuthenticationFailed</Code><Message>Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.
+RequestId:e512a4f4-0001-002b-78f1-aaffb8000000
+Time:2016-05-10T19:21:27.7710165Z</Message><AuthenticationErrorDetail>Request date header too old: 'Tue, 10 May 2016 13:44:38 GMT'</AuthenticationErrorDetail></Error>

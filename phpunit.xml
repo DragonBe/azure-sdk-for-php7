@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    bootstrap="./vendor/autoload.php"
+    stopOnFailure="true"
+    stopOnError="true"
+    colors="true">
+
+    <testsuites>
+        <testsuite name="Microsoft Azure SDK for PHP Testsuite">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+
+</phpunit>
