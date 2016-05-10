@@ -67,7 +67,7 @@ class AuthenticationService
      * @return string
      * @link https://msdn.microsoft.com/en-us/library/azure/dd179428.aspx
      */
-    protected function createAuthorizationHeader($url, $httpVerb = 'GET')
+    protected function createAuthorizationHeader(string $url, string $httpVerb = 'GET'): string
     {
         $date = $this->getUtcDate();
         $allHeaders = array_merge(
@@ -83,21 +83,39 @@ class AuthenticationService
         return 'SharedKey ' . $this->accountName . ':' . $this->createSignature($signatureString);
     }
 
-    protected function createSignature($signatureString)
+    /**
+     * Creates the signature for authentication to Microsoft Azure Storage Services
+     * 
+     * @param string $signatureString
+     * @return string
+     */
+    protected function createSignature(string $signatureString): string
     {
         return base64_encode(
             hash_hmac('sha256', $signatureString, base64_decode($this->accountKey), true)
         );
     }
 
-    protected function getCanonicalHeaders()
+    /**
+     * Assembles the canonical headers for Microsoft Azure Storage Services
+     * 
+     * @return array
+     */
+    protected function getCanonicalHeaders(): array
     {
         return [
             'x-ms-version' => Version::AZURE_API_VERSION,
         ];
     }
 
-    protected function getCanonicalResourceHeaders($url)
+    /**
+     * Creates canonical resource headers for creating the authentication
+     * signature.
+     * 
+     * @param string $url
+     * @return array
+     */
+    protected function getCanonicalResourceHeaders(string $url): array
     {
         $canonicalResourceHeaders = [
             'resource' => '/' . $this->accountName . parse_url($url, PHP_URL_PATH),
@@ -106,7 +124,14 @@ class AuthenticationService
         return array_values($canonicalResourceHeaders);
     }
 
-    protected function getSignatureHeaders($date)
+    /**
+     * The required headers required for creating the authentication
+     * signature.
+     * 
+     * @param string $date
+     * @return array
+     */
+    protected function getSignatureHeaders(string $date): array
     {
         $signatureHeaders = [
             'Content-Encoding' => NULL,
@@ -124,13 +149,25 @@ class AuthenticationService
         return $signatureHeaders;
     }
 
-    protected function parseUrlParams($params)
+    /**
+     * Parse the parameters on the URL
+     * 
+     * @param string $params
+     * @return string
+     */
+    protected function parseUrlParams(string $params): string
     {
         $string = str_replace('=', ':', $params);
         return $string;
     }
 
-    public static function getUtcDate($timestamp = null)
+    /**
+     * Create a GMT timestamp for usage on Azure Services
+     * 
+     * @param string|null $timestamp
+     * @return string
+     */
+    public static function getUtcDate(string $timestamp = null): string
     {
         $tz = date_default_timezone_get();
         date_default_timezone_set('GMT');
