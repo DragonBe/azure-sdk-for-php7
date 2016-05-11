@@ -8,6 +8,10 @@ use Microsoft\Azure\Common\Exception\NotFoundException;
 use Microsoft\Azure\Common\XmlHydratorInterface;
 use Microsoft\Azure\Storage\Auth\AuthenticationService;
 use Microsoft\Azure\Storage\Entity\ContainerEntity;
+use Microsoft\Azure\Storage\Entity\ContainerPropertyEntity;
+use Microsoft\Azure\Storage\Entity\ContainerPropertyEntityHydrator;
+use Microsoft\Azure\Storage\Entity\ContainerPropertyEntityHydratorFactory;
+use Microsoft\Azure\Storage\Entity\ContainerPropertyEntityInterface;
 
 class StorageService
 {
@@ -76,8 +80,9 @@ class StorageService
      * 
      * @return \SplObjectStorage
      * @throws NotFoundException
+     * @link https://msdn.microsoft.com/en-us/library/azure/dd179352.aspx
      */
-    public function listContainers()
+    public function listContainers(): \SplObjectStorage
     {
         $url = sprintf(
             '%s://%s.%s/?comp=list',
@@ -104,5 +109,41 @@ class StorageService
         }
         $containerCollection->rewind();
         return $containerCollection;
+    }
+
+    /**
+     * The Get Blob Service Properties operation gets the properties of a
+     * storage account’s Blob service, including properties for Storage
+     * Analytics and CORS (Cross-Origin Resource Sharing) rules.
+     *
+     * @return ContainerPropertyEntityInterface
+     * @throws NotFoundException
+     * @link https://msdn.microsoft.com/en-us/library/azure/hh452239.aspx
+     */
+    public function getBlobStorageProperties(): ContainerPropertyEntityInterface
+    {
+        $url = sprintf(
+            '%s://%s.%s/?restype=service&comp=properties',
+            $this->httpProtocol,
+            $this->accountName,
+            self::BLOP_API_URI
+        );
+        $headers = $this->authService->getAuthorizationHeaders($url, 'GET');
+
+        try {
+            $result = $this->client->request('GET', $url, [
+                'headers' => $headers,
+            ]);
+        } catch (ClientException $e) {
+            throw new NotFoundException($e->getMessage());
+        }
+
+        $xml = (string) $result->getBody();
+
+        $data = new \SimpleXMLIterator($xml);
+        
+        $hydrator = ContainerPropertyEntityHydratorFactory::create();
+        $propertiesObj = $hydrator->hydrate($data, new ContainerPropertyEntity());
+        return $propertiesObj;
     }
 }

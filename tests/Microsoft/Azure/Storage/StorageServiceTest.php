@@ -9,6 +9,7 @@ use GuzzleHttp\Psr7\Response;
 use Microsoft\Azure\Storage\Auth\AuthenticationService;
 use Microsoft\Azure\Storage\Entity\ContainerEntityHydrator;
 use Microsoft\Azure\Storage\Entity\ContainerEntityInterface;
+use Microsoft\Azure\Storage\Entity\ContainerPropertyEntity;
 use Microsoft\Azure\Storage\StorageService;
 
 class StorageServiceTest extends \PHPUnit_Framework_TestCase
@@ -143,5 +144,81 @@ class StorageServiceTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('\\Microsoft\\Azure\\Storage\\Entity\\ContainerEntity', $containerEntity);
         $this->assertSame('Foo', $containerEntity->getName());
+    }
+
+    /**
+     * @covers \Microsoft\Azure\Storage\StorageService::getBlobStorageProperties
+     */
+    public function testRetrieveContainerPropertiesWithCorsSet()
+    {
+        $storageService = $this->createStorageService('success_container_properties_with_cors');
+        $properties = $storageService->getBlobStorageProperties();
+        $this->assertInstanceOf('\\Microsoft\\Azure\\Storage\\Entity\\ContainerPropertyEntityInterface', $properties);
+
+        $this->assertInstanceOf('\\Microsoft\\Azure\\Storage\\Entity\\PropertyLoggingEntityInterface', $properties->getLogging());
+        $this->assertSame('1.0', $properties->getLogging()->getVersion());
+        $this->assertFalse($properties->getLogging()->isRead());
+        $this->assertTrue($properties->getLogging()->isWrite());
+        $this->assertTrue($properties->getLogging()->isDelete());
+        $this->assertTrue($properties->getLogging()->getRetentionsPolicy()->isEnabled());
+        $this->assertSame(7, $properties->getLogging()->getRetentionsPolicy()->getDays());
+
+        $this->assertInstanceOf('\\Microsoft\\Azure\\Storage\\Entity\\PropertyMetricsEntityInterface', $properties->getHourMetrics());
+        $this->assertSame('1.0', $properties->getHourMetrics()->getVersion());
+        $this->assertTrue($properties->getHourMetrics()->isEnabled());
+        $this->assertFalse($properties->getHourMetrics()->isIncludeApis());
+        $this->assertTrue($properties->getHourMetrics()->getRetentionPolicy()->isEnabled());
+        $this->assertSame(7, $properties->getHourMetrics()->getRetentionPolicy()->getDays());
+
+        $this->assertInstanceOf('\\Microsoft\\Azure\\Storage\\Entity\\PropertyMetricsEntityInterface', $properties->getMinuteMetrics());
+        $this->assertSame('1.0', $properties->getMinuteMetrics()->getVersion());
+        $this->assertTrue($properties->getMinuteMetrics()->isEnabled());
+        $this->assertTrue($properties->getMinuteMetrics()->isIncludeApis());
+        $this->assertTrue($properties->getMinuteMetrics()->getRetentionPolicy()->isEnabled());
+        $this->assertSame(7, $properties->getMinuteMetrics()->getRetentionPolicy()->getDays());
+
+        $this->assertInstanceOf('\\Microsoft\\Azure\\Storage\\Entity\\PropertyCorsRuleEntityInterface', $properties->getCors());
+        $this->assertSame('http://www.fabrikam.com,http://www.contoso.com', $properties->getCors()->getAllowedOrigins());
+        $this->assertSame('GET,PUT', $properties->getCors()->getAllowedMethods());
+        $this->assertSame('x-ms-meta-data*,x-ms-meta-customheader', $properties->getCors()->getExposedHeaders());
+        $this->assertSame('x-ms-meta-target*,x-ms-meta-customheader', $properties->getCors()->getAllowedHeaders());
+    }
+
+    /**
+     * @covers \Microsoft\Azure\Storage\StorageService::getBlobStorageProperties
+     */
+    public function testRetrieveContainerPropertiesWithOutCorsSet()
+    {
+        $storageService = $this->createStorageService('success_container_properties_without_cors');
+        $properties = $storageService->getBlobStorageProperties();
+        $this->assertInstanceOf('\\Microsoft\\Azure\\Storage\\Entity\\ContainerPropertyEntityInterface', $properties);
+
+        $this->assertInstanceOf('\\Microsoft\\Azure\\Storage\\Entity\\PropertyLoggingEntityInterface', $properties->getLogging());
+        $this->assertSame('1.0', $properties->getLogging()->getVersion());
+        $this->assertFalse($properties->getLogging()->isRead());
+        $this->assertTrue($properties->getLogging()->isWrite());
+        $this->assertTrue($properties->getLogging()->isDelete());
+        $this->assertTrue($properties->getLogging()->getRetentionsPolicy()->isEnabled());
+        $this->assertSame(7, $properties->getLogging()->getRetentionsPolicy()->getDays());
+
+        $this->assertInstanceOf('\\Microsoft\\Azure\\Storage\\Entity\\PropertyMetricsEntityInterface', $properties->getHourMetrics());
+        $this->assertSame('1.0', $properties->getHourMetrics()->getVersion());
+        $this->assertTrue($properties->getHourMetrics()->isEnabled());
+        $this->assertFalse($properties->getHourMetrics()->isIncludeApis());
+        $this->assertTrue($properties->getHourMetrics()->getRetentionPolicy()->isEnabled());
+        $this->assertSame(7, $properties->getHourMetrics()->getRetentionPolicy()->getDays());
+
+        $this->assertInstanceOf('\\Microsoft\\Azure\\Storage\\Entity\\PropertyMetricsEntityInterface', $properties->getMinuteMetrics());
+        $this->assertSame('1.0', $properties->getMinuteMetrics()->getVersion());
+        $this->assertTrue($properties->getMinuteMetrics()->isEnabled());
+        $this->assertTrue($properties->getMinuteMetrics()->isIncludeApis());
+        $this->assertTrue($properties->getMinuteMetrics()->getRetentionPolicy()->isEnabled());
+        $this->assertSame(7, $properties->getMinuteMetrics()->getRetentionPolicy()->getDays());
+
+        $this->assertInstanceOf('\\Microsoft\\Azure\\Storage\\Entity\\PropertyCorsRuleEntityInterface', $properties->getCors());
+        $this->assertSame('', $properties->getCors()->getAllowedOrigins());
+        $this->assertSame('', $properties->getCors()->getAllowedMethods());
+        $this->assertSame('', $properties->getCors()->getExposedHeaders());
+        $this->assertSame('', $properties->getCors()->getAllowedHeaders());
     }
 }
