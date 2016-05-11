@@ -76,6 +76,7 @@ class StorageService
      * 
      * @return \SplObjectStorage
      * @throws NotFoundException
+     * @link https://msdn.microsoft.com/en-us/library/azure/dd179352.aspx
      */
     public function listContainers()
     {
