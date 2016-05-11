@@ -1,0 +1,41 @@
+HTTP/1.0 200 OK
+Content-Type: application/xml
+Server: Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0
+x-ms-request-id: b82b0908-0001-0046-0aad-ab5596000000
+x-ms-version: 2015-04-05
+Date: Wed, 11 May 2016 17:48:19 GMT
+Connection: close
+
+<?xml version="1.0" encoding="utf-8"?>
+<StorageServiceProperties>
+    <Logging>
+            <Version>1.0</Version>
+            <Delete>true</Delete>
+            <Read>false</Read>
+            <Write>true</Write>
+            <RetentionPolicy>
+                <Enabled>true</Enabled>
+                <Days>7</Days>
+            </RetentionPolicy>
+        </Logging>
+        <HourMetrics>
+            <Version>1.0</Version>
+            <Enabled>true</Enabled>
+            <IncludeAPIs>false</IncludeAPIs>
+            <RetentionPolicy>
+                <Enabled>true</Enabled>
+                <Days>7</Days>
+            </RetentionPolicy>
+        </HourMetrics>
+        <MinuteMetrics>
+            <Version>1.0</Version>
+            <Enabled>true</Enabled>
+            <IncludeAPIs>true</IncludeAPIs>
+            <RetentionPolicy>
+                <Enabled>true</Enabled>
+                <Days>7</Days>
+            </RetentionPolicy>
+        </MinuteMetrics>
+    <Cors/>
+    <DefaultServiceVersion>2013-08-15</DefaultServiceVersion>
+</StorageServiceProperties>

@@ -1,0 +1,49 @@
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Content-Type: application/xml
+Server: Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0
+x-ms-request-id: e6cc9b34-0001-002b-7956-abffb8000000
+x-ms-version: 2015-04-05
+Date: Wed, 11 May 2016 07:24:18 GMT
+
+<?xml version="1.0" encoding="utf-8"?>
+<StorageServiceProperties>
+    <Logging>
+        <Version>1.0</Version>
+        <Delete>true</Delete>
+        <Read>false</Read>
+        <Write>true</Write>
+        <RetentionPolicy>
+            <Enabled>true</Enabled>
+            <Days>7</Days>
+        </RetentionPolicy>
+    </Logging>
+    <HourMetrics>
+        <Version>1.0</Version>
+        <Enabled>true</Enabled>
+        <IncludeAPIs>false</IncludeAPIs>
+        <RetentionPolicy>
+            <Enabled>true</Enabled>
+            <Days>7</Days>
+        </RetentionPolicy>
+    </HourMetrics>
+    <MinuteMetrics>
+        <Version>1.0</Version>
+        <Enabled>true</Enabled>
+        <IncludeAPIs>true</IncludeAPIs>
+        <RetentionPolicy>
+            <Enabled>true</Enabled>
+            <Days>7</Days>
+        </RetentionPolicy>
+    </MinuteMetrics>
+    <Cors>
+        <CorsRule>
+            <AllowedOrigins>http://www.fabrikam.com,http://www.contoso.com</AllowedOrigins>
+            <AllowedMethods>GET,PUT</AllowedMethods>
+            <MaxAgeInSeconds>500</MaxAgeInSeconds>
+            <ExposedHeaders>x-ms-meta-data*,x-ms-meta-customheader</ExposedHeaders>
+            <AllowedHeaders>x-ms-meta-target*,x-ms-meta-customheader</AllowedHeaders>
+        </CorsRule>
+    </Cors>
+    <DefaultServiceVersion>2013-08-15</DefaultServiceVersion>
+</StorageServiceProperties>

@@ -157,7 +157,11 @@ class AuthenticationService
      */
     protected function parseUrlParams(string $params): string
     {
-        $string = str_replace('=', ':', $params);
+        parse_str($params, $elements);
+        ksort($elements);
+        $string = implode("\n", array_map(function ($value, $key) {
+            return $key . ':' . $value;
+        }, $elements, array_keys($elements)));
         return $string;
     }
 
